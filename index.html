@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07120e">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Zikr">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Zikr</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri&family=Cormorant+Garamond:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f1e6;--bg2:#ece3cf;--card:rgba(255,252,244,.85);--ink:#1b2b24;--mute:#78806f;--acc:#0f6b52;--acc2:#e3efe6;--line:#dccfae;--gold:#a97c1f;--gold2:#d9b45a;--glow:rgba(201,162,74,.5);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#07120e;--bg2:#0c1f18;--card:rgba(16,34,27,.82);--ink:#efe9d8;--mute:#8fa097;--acc:#3fbf93;--acc2:#12291f;--line:#2b4237;--gold:#d9b45a;--gold2:#f0d28a;--glow:rgba(217,180,90,.55)}}
+:root[data-theme="dark"]{--bg:#07120e;--bg2:#0c1f18;--card:rgba(16,34,27,.82);--ink:#efe9d8;--mute:#8fa097;--acc:#3fbf93;--acc2:#12291f;--line:#2b4237;--gold:#d9b45a;--gold2:#f0d28a;--glow:rgba(217,180,90,.55)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{background:radial-gradient(120% 60% at 50% 0%,var(--bg2),var(--bg)) fixed,var(--bg);
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cpath d='M32 4l6 15 15-6-6 15 15 6-15 6 6 15-15-6-6 15-6-15-15 6 6-15-15-6 15-6-6-15 15 6z' fill='none' stroke='%23c9a24a' stroke-opacity='.13'/%3E%3C/svg%3E"),radial-gradient(120% 60% at 50% 0%,var(--bg2),var(--bg));background-attachment:fixed}
+.wrap{max-width:480px;margin:0 auto;padding:14px 16px 44px}
+h1{font-family:"Cormorant Garamond",Georgia,serif;font-size:30px;letter-spacing:.14em;margin:6px 0 2px;text-align:center;color:var(--gold);font-weight:700}
+.orn{text-align:center;color:var(--gold);opacity:.7;font-size:12px;letter-spacing:.5em;margin-bottom:12px}
+.top{display:flex;gap:8px;align-items:center}
+.chips{display:flex;gap:8px;overflow-x:auto;flex:1;padding:2px 0 6px}
+.chip{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:20px;padding:7px 15px;font-size:14px}
+.chip.on{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#1b1405;border-color:transparent;font-weight:600}
+.snd{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--card);font-size:16px;color:var(--ink)}
+.add{display:flex;gap:8px;margin:6px 0 4px}
+.add input{flex:1;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:9px 11px;font-size:14px;min-width:0}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:9px 13px;font-size:14px}
+.card{background:var(--card);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:26px;padding:20px 12px 16px;text-align:center;margin-top:12px;box-shadow:0 12px 40px rgba(0,0,0,.18),inset 0 0 0 1px rgba(217,180,90,.12)}
+.step{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.ar{font-size:38px;line-height:1.6;margin:2px 0 0;font-family:Amiri,"Scheherazade New","Noto Naskh Arabic",serif;color:var(--gold)}
+.tr{font-family:"Cormorant Garamond",Georgia,serif;font-size:24px;font-weight:700;margin:0 8px}
+.ringbox{position:relative;width:250px;height:250px;margin:14px auto 6px;border-radius:50%}
+.ringbox.pulse{animation:pulse .7s ease-out}
+.ringbox.glow{animation:glow 1.6s ease-out}
+@keyframes pulse{0%{box-shadow:0 0 0 0 var(--glow)}100%{box-shadow:0 0 0 22px transparent}}
+@keyframes glow{0%{box-shadow:0 0 0 0 var(--glow),0 0 40px var(--glow)}60%{box-shadow:0 0 0 34px transparent,0 0 60px var(--glow)}100%{box-shadow:0 0 0 40px transparent,0 0 0 transparent}}
+.ringbox svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.tap{position:absolute;inset:16px;border-radius:50%;border:1px solid var(--line);background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.14),transparent 55%),var(--acc2);color:var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;touch-action:manipulation;user-select:none;overflow:hidden}
+.tap:active{transform:scale(.97)}
+.tap .num{font-family:"Cormorant Garamond",Georgia,serif;font-size:76px;font-weight:700;line-height:1}
+.tap.pop .num{animation:pop .25s ease-out}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.18)}100%{transform:scale(1)}}
+.tap small{font-size:13px;letter-spacing:.15em;color:var(--mute);margin-top:4px}
+.rip{position:absolute;border-radius:50%;background:var(--glow);width:20px;height:20px;transform:scale(0);animation:rip .6s ease-out forwards;pointer-events:none}
+@keyframes rip{to{transform:scale(14);opacity:0}}
+.dm{min-height:22px;margin-top:2px;color:var(--gold);font-weight:600;letter-spacing:.04em}
+.row{display:flex;gap:8px;justify-content:center;margin-top:8px;flex-wrap:wrap}
+.total{margin:16px 0 6px;font-size:12px;letter-spacing:.15em;color:var(--mute);text-align:center;text-transform:uppercase}
+.bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2));width:0;transition:width .3s}
+.list{margin-top:14px;display:grid;gap:7px}
+.it{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:11px 14px;font-size:14px;text-align:left;width:100%}
+.it.cur{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.it.done{opacity:.6}
+.it b{color:var(--gold);font-weight:600}
+.foot{margin-top:20px;text-align:center;font-size:12px;color:var(--mute)}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:20}
+#toast{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%) scale(.8);z-index:21;pointer-events:none;opacity:0;text-align:center;font-family:"Cormorant Garamond",Georgia,serif;color:var(--gold2);text-shadow:0 2px 18px rgba(0,0,0,.55);transition:opacity .35s,transform .35s}
+#toast.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+#toast b{display:block;font-size:34px}
+#toast span{font-size:18px;opacity:.9}
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+<div id="toast"></div>
+<div class="wrap">
+<h1>ZIKR</h1>
+<div class="orn">✦ ✦ ✦</div>
+<div class="top"><div class="chips" id="chips"></div><button class="snd" id="snd" aria-label="Ton">🔔</button></div>
+<div class="add"><input id="nm" placeholder="Neue Person (z. B. Mama)" maxlength="20"><button class="btn" id="addb">Hinzufügen</button></div>
+
+<div class="card">
+<div class="step" id="step"></div>
+<p class="ar" id="ar"></p>
+<p class="tr" id="tr"></p>
+<div class="ringbox" id="rb">
+<svg viewBox="0 0 250 250" width="250" height="250"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0d28a"/><stop offset="1" stop-color="#b8892b"/></linearGradient></defs><circle cx="125" cy="125" r="112" fill="none" stroke="var(--line)" stroke-width="7"/><circle id="ring" cx="125" cy="125" r="112" fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round" stroke-dasharray="703.7" stroke-dashoffset="703.7" style="transition:stroke-dashoffset .15s"/></svg>
+<button class="tap" id="tap" aria-label="Zählen"><span class="num" id="cnt">0</span><small id="of"></small></button>
+</div>
+<div class="dm" id="dm"></div>
+<div class="row"><button class="btn" id="undo">− 1</button><button class="btn" id="rst">Dieses zurücksetzen</button></div>
+</div>
+
+<div class="total" id="total"></div>
+<div class="bar"><i id="bar"></i></div>
+<div class="list" id="list"></div>
+<div class="row" style="margin-top:14px"><button class="btn" id="rall">Alles zurücksetzen</button><button class="btn" id="del">Person entfernen</button></div>
+<div class="foot">Der Fortschritt wird auf diesem Gerät gespeichert und startet jeden Tag neu.</div>
+</div>
+<script>
+var ITEMS=[
+{t:"Subhanallah",a:"سُبْحَانَ اللّٰه",n:33,fx:"mid"},
+{t:"Elhamdulillah",a:"الْحَمْدُ لِلّٰه",n:33,fx:"mid"},
+{t:"Allahu ekber",a:"اللّٰهُ أَكْبَر",n:33,fx:"mid"},
+{t:"La ilahe illallah",a:"لَا إِلٰهَ إِلَّا اللّٰه",n:100,fx:"grand"},
+{t:"La havle ve la kuvvete illa billah",a:"لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللّٰه",n:100,fx:"big"},
+{t:"Subhanallahi ve bihamdihi",a:"سُبْحَانَ اللّٰهِ وَبِحَمْدِه",n:100,fx:"big"},
+{t:"Estağfirullah",a:"أَسْتَغْفِرُ اللّٰه",n:100,fx:"big"},
+{t:"Salavat",a:"اللّٰهُمَّ صَلِّ عَلَى مُحَمَّدٍ",n:100,fx:"big"}
+];
+var TOTAL=ITEMS.reduce(function(s,x){return s+x.n},0);
+var KEY="zikr-v2",S={people:["Ich"],cur:"Ich",d:{},snd:true};
+try{var raw=localStorage.getItem(KEY);if(raw){var p=JSON.parse(raw);if(p&&p.people&&p.people.length)S=p}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function today(){var d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+function fresh(){return{day:today(),c:ITEMS.map(function(){return 0}),i:0}}
+function me(){var m=S.d[S.cur];if(!m||m.day!==today()||m.c.length!==ITEMS.length){m=S.d[S.cur]=fresh()}return m}
+function buzz(p){try{if(navigator.vibrate)navigator.vibrate(p)}catch(e){}}
+function $(id){return document.getElementById(id)}
+function nextOpen(m,from){for(var k=1;k<=ITEMS.length;k++){var j=(from+k)%ITEMS.length;if(m.c[j]<ITEMS[j].n)return j}return from}
+
+/* Ton */
+var AC=null;
+function chime(freqs,len){
+ if(!S.snd)return;
+ try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+ freqs.forEach(function(f,k){var o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+k*0.16;
+  o.type="sine";o.frequency.value=f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.12,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+len);
+  o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+len+.05)})}catch(e){}
+}
+/* Partikel */
+var cv=$("fx"),cx=cv.getContext("2d"),P=[],run=false;
+function size(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio}
+size();addEventListener("resize",size);
+var COLS=["#f0d28a","#d9b45a","#fff2c4","#3fbf93","#ffffff"];
+function burst(x,y,n,spd){
+ for(var i=0;i<n;i++){var a=Math.random()*6.283,v=(.4+Math.random())*spd;
+  P.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-spd*.25,l:1,d:.008+Math.random()*.012,r:1.5+Math.random()*3,c:COLS[Math.floor(Math.random()*COLS.length)]})}
+ if(!run){run=true;requestAnimationFrame(loop)}
+}
+function loop(){
+ var k=devicePixelRatio;cx.clearRect(0,0,cv.width,cv.height);
+ P=P.filter(function(q){return q.l>0});
+ P.forEach(function(q){q.x+=q.vx;q.y+=q.vy;q.vy+=.12;q.vx*=.985;q.l-=q.d;
+  cx.globalAlpha=Math.max(q.l,0);cx.fillStyle=q.c;cx.beginPath();cx.arc(q.x*k,q.y*k,q.r*k,0,6.283);cx.fill()});
+ if(P.length)requestAnimationFrame(loop);else{run=false;cx.clearRect(0,0,cv.width,cv.height)}
+}
+function center(){var r=$("rb").getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+r.height/2}}
+function toast(a,b){var t=$("toast");t.innerHTML="<b>"+a+"</b><span>"+b+"</span>";t.classList.add("show");setTimeout(function(){t.classList.remove("show")},1700)}
+function cls(el,c,ms){el.classList.remove(c);void el.offsetWidth;el.classList.add(c);setTimeout(function(){el.classList.remove(c)},ms)}
+function celebrate(kind,name){
+ var c=center();
+ if(kind==="mid"){burst(c.x,c.y,50,6);cls($("rb"),"glow",1600);buzz([50,40,50]);chime([660,880],.9);toast("Maschallah",name)}
+ else if(kind==="big"){burst(c.x,c.y,110,8);setTimeout(function(){burst(c.x,c.y,60,10)},250);cls($("rb"),"glow",1600);buzz([70,40,70,40,120]);chime([523,659,784],1.2);toast("Maschallah ✦",name+" · 100")}
+ else{finale(name,true)}
+}
+function finale(name,part){
+ var c=center(),w=innerWidth,h=innerHeight;
+ [0,200,420,650,900].forEach(function(d,k){setTimeout(function(){burst(w*(.2+Math.random()*.6),h*(.2+Math.random()*.4),90,9)},d)});
+ burst(c.x,c.y,140,10);cls($("rb"),"glow",1600);
+ buzz([80,40,80,40,80,40,200]);chime(part?[523,659,784,1047]:[392,523,659,784,1047],1.6);
+ toast(part?"Allahu ekber ✦ 100":"Elhamdulillah ✦",part?name:"Alles vollendet. Möge Allah es annehmen.");
+}
+
+function render(){
+ var m=me(),it=ITEMS[m.i],c=m.c[m.i];
+ $("chips").innerHTML="";
+ S.people.forEach(function(n){var b=document.createElement("button");b.className="chip"+(n===S.cur?" on":"");b.textContent=n;b.onclick=function(){S.cur=n;save();render()};$("chips").appendChild(b)});
+ $("snd").textContent=S.snd?"🔔":"🔕";
+ $("step").textContent="Schritt "+(m.i+1)+" von "+ITEMS.length;
+ $("ar").textContent=it.a;$("tr").textContent=it.t;
+ $("cnt").textContent=c;$("of").textContent="VON "+it.n;
+ $("ring").style.strokeDashoffset=703.7*(1-c/it.n);
+ var sum=m.c.reduce(function(a,b){return a+b},0);
+ $("total").textContent="Gesamt "+sum+" / "+TOTAL;
+ $("bar").style.width=(100*sum/TOTAL)+"%";
+ $("dm").textContent=sum>=TOTAL?"Alles geschafft 🤲":(c>=it.n?"✓ Fertig – tippe für den nächsten":"");
+ $("list").innerHTML="";
+ ITEMS.forEach(function(x,j){
+  var b=document.createElement("button");
+  b.className="it"+(j===m.i?" cur":"")+(m.c[j]>=x.n?" done":"");
+  var l=document.createElement("span");l.textContent=(m.c[j]>=x.n?"✓ ":"")+x.t;
+  var r=document.createElement("b");r.textContent=m.c[j]+" / "+x.n;
+  b.appendChild(l);b.appendChild(r);
+  b.onclick=function(){m.i=j;save();render()};
+  $("list").appendChild(b)});
+}
+$("tap").onclick=function(e){
+ var m=me(),it=ITEMS[m.i],tp=$("tap");
+ if(m.c[m.i]>=it.n){var nx=nextOpen(m,m.i);if(nx!==m.i){m.i=nx;save();render()}return}
+ m.c[m.i]++;
+ /* kleiner Effekt pro Tipp */
+ var r=tp.getBoundingClientRect(),rp=document.createElement("i");rp.className="rip";
+ rp.style.left=((e.clientX||r.left+r.width/2)-r.left-10)+"px";rp.style.top=((e.clientY||r.top+r.height/2)-r.top-10)+"px";
+ tp.appendChild(rp);setTimeout(function(){rp.remove()},650);
+ cls(tp,"pop",260);cls($("rb"),"pulse",700);buzz(12);
+ save();render();
+ if(m.c[m.i]>=it.n){
+  var from=m.i,sum=m.c.reduce(function(a,b){return a+b},0);
+  celebrate(it.fx,it.t);
+  if(sum>=TOTAL){setTimeout(function(){finale("",false)},1900);return}
+  var wait=it.fx==="mid"?1400:2000;
+  setTimeout(function(){var mm=me();if(mm.i===from){var nx=nextOpen(mm,from);if(nx!==from){mm.i=nx;save();render()}}},wait);
+ }
+};
+$("snd").onclick=function(){S.snd=!S.snd;save();render();if(S.snd)chime([660],.5)};
+$("undo").onclick=function(){var m=me();if(m.c[m.i]>0){m.c[m.i]--;save();render()}};
+$("rst").onclick=function(){var m=me();m.c[m.i]=0;save();render()};
+$("rall").onclick=function(){S.d[S.cur]=fresh();save();render()};
+$("addb").onclick=function(){
+ var v=$("nm").value.trim();
+ if(!v||S.people.indexOf(v)>-1)return;
+ S.people.push(v);S.cur=v;$("nm").value="";save();render()};
+$("del").onclick=function(){
+ if(S.people.length<2)return;
+ S.people=S.people.filter(function(n){return n!==S.cur});
+ delete S.d[S.cur];S.cur=S.people[0];save();render()};
+render();
+if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
+</script>
+</body>
+</html>
